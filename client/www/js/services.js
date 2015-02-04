@@ -3,43 +3,59 @@ angular.module('starter.services', [])
 .factory('Search', function($http, $q) {
   var S = {};
 
+  //var address = 'http://104.131.140.95:5000/';
+  var address = 'http://localhost:5000/';
+
   function request(location) {
-    return $http.get('http://104.131.140.95:5000/' + location).then(function (data) {
+    return $http.get(address + location).then(function (data) {
       console.log(data);
       return data.data.businesses;
     });
   }
 
   S.search = function(location) {
-    if (!location || location.length === 0) {
 
-      var deferred = $q.defer();
+    var query = '?';
 
-      var opts = {};
-
-      try {
-        var watchId = navigator.geolocation.watchPosition(success, failure, opts);
-      } catch (e) {
-        deferred.resolve('Geolocation not available.');
-      }
-
-      return deferred.promise;
-
-      function success(position) {
-        navigator.geolocation.clearWatch(watchId);
-        var location = position.coords.latitude + ',' + position.coords.longitude;
-        console.log(location);
-        deferred.resolve(request(location));
-      }
-
-      function failure() {
-        alert('Failed to get current position. Is geolocation enabled?');
-        navigator.geolocation.clearWatch(watchId);
-      }
-
-    } else {
-      return request(location);
+    if (location && location.length > 0) {
+      query += 'l=' + location;
     }
+
+    var deferred = $q.defer();
+
+    var opts = {};
+
+    try {
+      var watchId = navigator.geolocation.watchPosition(success, failure, opts);
+    } catch (e) {
+      deferred.resolve(request(query));
+    }
+
+
+
+    function success(position) {
+      navigator.geolocation.clearWatch(watchId);
+      var coords = position.coords.latitude + ',' + position.coords.longitude;
+
+      if (query.length > 1) {
+        query += '&';
+      }
+
+      query += ('c=' + coords)
+
+      console.log(query);
+
+      deferred.resolve(request(query));
+    }
+
+    function failure() {
+      navigator.geolocation.clearWatch(watchId);
+      alert('Failed to get current position. Is geolocation enabled?');
+
+      deferred.resolve(request(query));
+    }
+
+    return deferred.promise;
   };
 
   return S;
