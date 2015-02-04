@@ -19,26 +19,12 @@
       <ion-item
               swipable="{{item.id}}"
               ng-repeat="item in items | orderBy:'distance'"
-              style="
-                height: 80px;
-                margin-bottom: 1em;
-                border-radius: 4px;
-                padding: 10px 88px 0;
-                ">
-        <div style="
-            background: url('{{item.image_url || item.snippet_image_url}}');
-            background-size: cover;
-            background-position: center center;
-            display: block;
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            left: 0;
-            top: -1px;">
+              class="list-item">
+        <div style="background: url('{{item.image_url || item.snippet_image_url}}');" class="image">
         </div>
-        <p ng-bind="item.name" style="font-size: 125%;"></p>
-        <p ng-bind="item.location.display_address[0]" style="margin-top: 8px; margin-bottom: 3px; line-height: 1;"></p>
-        <p ng-bind="item.location.display_address[1]" style="line-height: 1;"></p>
+        <p ng-bind="item.name" class="item-name"></p>
+        <p ng-bind="item.location.display_address[0]" class="item-address"></p>
+        <p ng-bind="item.location.display_address[1]" class="item-address"></p>
 
         <div class="details" style="position: absolute; right: 0.75em; top: .5em; text-align: right;">
             <i class="icon ion-android-star energized" ng-repeat="n in item.rating | range"></i>
