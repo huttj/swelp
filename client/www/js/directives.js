@@ -1,6 +1,9 @@
 angular.module('starter.directives', [])
 
     .directive('swipable', function($timeout) {
+
+        var isAndroid = ionic.Platform.isAndroid();
+
         return {
             restrict: 'A',
             link: function (scope, el, attrs) {
@@ -9,7 +12,7 @@ angular.module('starter.directives', [])
                 var dragging = false;
 
                 el.on('touch', function(e) {
-                    document.addEventListener("touchmove", preventBehavior, false);
+                    if (isAndroid) document.addEventListener("touchmove", preventBehavior, false);
                 });
 
                 el.on('dragstart', function(e) {
@@ -18,6 +21,7 @@ angular.module('starter.directives', [])
                     var deltaY = Math.abs(e.gesture.deltaY);
                     var momenY = Math.abs(e.gesture.velocityY + deltaY);
 
+                    if (!isAndroid) document.addEventListener("touchmove", preventBehavior, false);
                     if (momenY < 5 && deltaX > 1) {
                         dragging = true;
                         unanimate();
