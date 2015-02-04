@@ -17,6 +17,7 @@ angular.module('starter.controllers', [])
         Search.search($scope.form.location).then(function (data) {
             $scope.items = data;
             $scope.searching = false;
+            $scope.deleted = [];
             $ionicLoading.hide();
         }).catch(function (e) {
             $ionicLoading.hide();

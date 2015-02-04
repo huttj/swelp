@@ -4,7 +4,7 @@ angular.module('starter.services', [])
   var S = {};
 
   function request(location) {
-    return $http.get('http://192.168.0.2:5000/' + location).then(function (data) {
+    return $http.get('http://104.131.140.95:5000/' + location).then(function (data) {
       console.log(data);
       return data.data.businesses;
     });
@@ -64,6 +64,8 @@ angular.module('starter.services', [])
 
 .filter('round', function () {
   return function(n) {
+    if (typeof n !== 'number') return '?';
+
     if (n > 3) {
       return Math.floor(n);
     } else if (n > 1) {
