@@ -1,0 +1,51 @@
+<ion-view view-title="Find a Place to Eat">
+
+<button class="button button-energized" ng-click="undo()" style="z-index: 2; position: fixed; bottom: 9px; right: 9px;" ng-if="deleted.length"><i class="icon ion-reply"></i> Undo</button>
+
+  <ion-content class="padding" overflow-scroll="true">
+
+    <form ng-submit="search()">
+        <div class="row">
+            <div class="col col-75">
+                <label class="item item-input">
+                  <input type="text" placeholder="Location" ng-model="form.location">
+                </label>
+            </div>
+            <button class="button button-positive col" style="height: 47px; margin-top: 4px; line-height: 1;" ng-click="search()">Search</button>
+        </div>
+    </form>
+
+    <ion-list style="width: 100%; overflow: hidden;">
+      <ion-item
+              swipable="{{item.id}}"
+              ng-repeat="item in items"
+              style="
+                height: 80px;
+                margin-bottom: 1em;
+                border-radius: 4px;
+                padding: 10px 88px 0;
+                ">
+        <div style="
+            background: url('{{item.image_url || item.snippet_image_url}}');
+            background-size: cover;
+            background-position: center center;
+            display: block;
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: 0;
+            top: -1px;">
+        </div>
+        <p ng-bind="item.name" style="font-size: 125%;"></p>
+        <p ng-bind="item.location.display_address[0]" style="margin-top: 8px; margin-bottom: 3px; line-height: 1;"></p>
+        <p ng-bind="item.location.display_address[1]" style="line-height: 1;"></p>
+
+        <div class="details" style="position: absolute; right: 0.75em; top: .5em;">
+            <i class="icon ion-android-star energized" ng-repeat="n in item.rating | range"></i>
+            <i class="icon ion-android-star-half energized" ng-if="item.rating % 1 >= .5"></i>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
