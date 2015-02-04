@@ -3,8 +3,8 @@ angular.module('starter.services', [])
 .factory('Search', function($http, $q) {
   var S = {};
 
-  //var address = 'http://104.131.140.95:5000/';
-  var address = 'http://localhost:5000/';
+  var address = 'http://104.131.140.95:5000/';
+  //var address = 'http://localhost:5000/';
 
   function request(location) {
     return $http.get(address + location).then(function (data) {
