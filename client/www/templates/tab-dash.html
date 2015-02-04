@@ -2,7 +2,7 @@
 
 <button class="button button-energized" ng-click="undo()" style="z-index: 2; position: fixed; bottom: 9px; right: 9px;" ng-if="deleted.length"><i class="icon ion-reply"></i> Undo</button>
 
-  <ion-content class="padding" overflow-scroll="true">
+  <ion-content class="padding" overflow-scroll="true" style="bottom: 0;">
 
     <form ng-submit="search()">
         <div class="row">
@@ -18,7 +18,7 @@
     <ion-list style="width: 100%; overflow: hidden;">
       <ion-item
               swipable="{{item.id}}"
-              ng-repeat="item in items"
+              ng-repeat="item in items | orderBy:'distance'"
               style="
                 height: 80px;
                 margin-bottom: 1em;
@@ -40,9 +40,10 @@
         <p ng-bind="item.location.display_address[0]" style="margin-top: 8px; margin-bottom: 3px; line-height: 1;"></p>
         <p ng-bind="item.location.display_address[1]" style="line-height: 1;"></p>
 
-        <div class="details" style="position: absolute; right: 0.75em; top: .5em;">
+        <div class="details" style="position: absolute; right: 0.75em; top: .5em; text-align: right;">
             <i class="icon ion-android-star energized" ng-repeat="n in item.rating | range"></i>
             <i class="icon ion-android-star-half energized" ng-if="item.rating % 1 >= .5"></i>
+            <p ng-bind="(item.distance * 0.000621371 | round) + ' mi'"></p>
         </div>
       </ion-item>
     </ion-list>

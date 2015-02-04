@@ -60,4 +60,16 @@ angular.module('starter.services', [])
 
     //return arry;
   }
+})
+
+.filter('round', function () {
+  return function(n) {
+    if (n > 3) {
+      return Math.floor(n);
+    } else if (n > 1) {
+      return n.toPrecision(1);
+    } else {
+      return (n.toPrecision(1)).substr(1);
+    }
+  }
 });
